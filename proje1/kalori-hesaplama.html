@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalori Hesaplama</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- jQuery kütüphanesi -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Slick Slider stilleri -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+
+<!-- Slick Slider tema stilleri (isteğe bağlı) -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+<!-- Slick Slider script dosyası -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+</head>
+<body>
+<header>
+    <h1>Kalori Hesaplama</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Anasayfa</a></li>
+            <li><a href="hakkinda.html">Hakkında</a></li>
+            <li><a href="beslenme.html">Sağlıklı Beslenme</a></li>
+            <li><a href="kalori-hesaplama.html">Kalori Hesaplama</a></li>
+
+            <button id="toggleThemeBtn"></button>
+            <button class="fas fa-thumbtack" id ="changeFontBtn"></button>
+
+        </ul>
+    </nav>
+</header>
+
+
+<!-- Pop-up içeriği -->
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <h2>Hoş Geldiniz!</h2>
+        <p> </p>
+    </div>
+</div>
+
+<script src="scripts.js"></script>
+
+
+<section id="hesaplama">
+    <h2>Kalori İhtiyacınızı Hesaplayın </h2>
+    <p><b>Kalori ihtiyacınız, yaş, cinsiyet, kilo, boy ve günlük aktivite düzeyine göre değişir.</b></p>
+
+    <p>Aşağıdaki formu doldurarak günlük kalori ihtiyacınızı hesaplayabilirsiniz. </p>
+    <hr>
+    <form onsubmit="hesapla(event)">
+        <label for="cinsiyet">Cinsiyet:</label>
+        <select id="cinsiyet">
+            <option value="erkek">Erkek</option>
+            <option value="kadin">Kadın</option>
+        </select><br><br>
+
+        <label for="yas">Yaş:</label>
+        <input type="number" id="yas" min="0"><br><br>
+
+        <label for="kilo">Kilo (kg):</label>
+        <input type="number" id="kilo" min="0"><br><br>
+
+        <label for="boy">Boy (cm):</label>
+        <input type="number" id="boy" min="0"><br><br>
+
+        <label for="aktivite">Gün içi hareketlilik seviyeniz:</label>
+        <select id="aktivite">
+            <option value="sedanter">Sedanter (Hareket etmiyorum veya çok az hareket ediyorum.)</option>
+            <option value="az-hareketli">Az hareketli (Hafif hareketli bir yaşam / Haftada 1-3 gün egzersiz yapıyorum.)</option>
+            <option value="orta-hareketli">Orta derece hareketli (Hareketli bir yaşam / Haftada 3-5 gün egzersiz yapıyorum.)</option>
+            <option value="cok-hareketli">Çok hareketli (Çok hareketli bir yaşam / Haftada 6-7 gün egzersiz yapıyorum.)</option>
+            <option value="asiri-hareketli">Aşırı hareketli (Profesyonel sporcu, atlet seviyesi.)</option>
+        </select><br><br>
+
+        <label for="hedef">Hedef:</label>
+        <select id="hedef">
+            <option value="kas-yapmak">Kas Yapmak (Bulk)</option>
+            <option value="zayiflamak">Zayıflamak, Yağ Yakmak</option>
+        </select><br><br>
+
+        <button type="submit">Hesapla</button>
+    </form>
+
+    <div id="sonuc"></div>
+    <div id="makroBesinler"></div>
+</section>
+
+<footer class="text-center text-lg-start">
+    <div class="container d-flex justify-content-center py-5">
+        <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #ffffff;" onclick="window.location.href='https://www.facebook.com/'">
+            <i class="fab fa-facebook-f"></i> 
+        </button>
+        <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #f8f8f8;" onclick="window.location.href='https://www.youtube.com/'">
+            <i class="fab fa-youtube"></i> 
+        </button>
+        <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #ffffff;" onclick="window.location.href='https://www.instagram.com/'">
+            <i class="fab fa-instagram"></i> 
+        </button>
+        <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #ffffff;" onclick="window.location.href='https://www.x.com/'">
+            <i class="fab fa-twitter"></i> 
+        </button>
+    </div>
+
+
+    <div class="text-center text-white p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <p>Telif Hakkı &copy; 2024 Sağlıklı Yaşam</p>
+        
+    </div>
+
+</footer>
+
+<button onclick="goToTop()" id="goToTopBtn" title="Sayfanın başına git">Yukarı Çık</button>
+
+<script>
+    function hesapla(event) {
+        event.preventDefault(); 
+        var cinsiyet = document.getElementById("cinsiyet").value;
+        var yas = parseInt(document.getElementById("yas").value);
+        var kilo = parseFloat(document.getElementById("kilo").value);
+        var boy = parseInt(document.getElementById("boy").value);
+        var aktivite = document.getElementById("aktivite").value;
+        var hedef = document.getElementById("hedef").value;
+
+        var bmr;
+
+        if (cinsiyet === "erkek") {
+            bmr = 88.362 + (13.397 * kilo) + (4.799 * boy) - (5.677 * yas);
+        } else {
+            bmr = 447.593 + (9.247 * kilo) + (3.098 * boy) - (4.330 * yas);
+        }
+
+        var aktiviteFaktoru;
+
+        switch (aktivite) {
+            case "sedanter":
+                aktiviteFaktoru = 1.2;
+                break;
+            case "az-hareketli":
+                aktiviteFaktoru = 1.375;
+                break;
+            case "orta-hareketli":
+                aktiviteFaktoru = 1.55;
+                break;
+            case "cok-hareketli":
+                aktiviteFaktoru = 1.725;
+                break;
+            case "asiri-hareketli":
+                aktiviteFaktoru = 1.9;
+                break;
+            default:
+                aktiviteFaktoru = 1.2;
+        }
+
+        var kaloriIhtiyaci = Math.round(bmr * aktiviteFaktoru);
+        var proteinIhtiyaci;
+        var karbonhidratIhtiyaci;
+        var yagIhtiyaci;
+
+        if (hedef === "kas-yapmak") {
+            proteinIhtiyaci = Math.round(kaloriIhtiyaci * 0.2 / 4); // Proteinin 1 gramı 4 kalori
+            karbonhidratIhtiyaci = Math.round(kaloriIhtiyaci * 0.6 / 4); // Karbonhidratın 1 gramı 4 kalori
+            yagIhtiyaci = Math.round(kaloriIhtiyaci * 0.2 / 9); // Yağın 1 gramı 9 kalori
+        } else if (hedef === "zayiflamak") {
+            kaloriIhtiyaci -= 400; // Günlük kalori ihtiyacını 400 azalt
+            proteinIhtiyaci = Math.round(kaloriIhtiyaci * 0.2 / 4); // Proteinin 1 gramı 4 kalori
+            yagIhtiyaci = Math.round(kaloriIhtiyaci * 0.2 / 9); // Yağın 1 gramı 9 kalori
+            karbonhidratIhtiyaci = Math.round(kaloriIhtiyaci * 0.4 / 4); // Karbonhidratın 1 gramı 4 kalori
+        }
+
+        var sonuc = document.getElementById("sonuc");
+        sonuc.innerHTML = "<p>Günlük kalori ihtiyacınız: <strong>" + kaloriIhtiyaci + "</strong> kcal</p>";
+
+        var makroBesinler = document.getElementById("makroBesinler");
+        makroBesinler.innerHTML = "<h3>Makro Besinler:</h3>" +
+            "<p>Protein ihtiyacınız: <strong>" + proteinIhtiyaci + "</strong> gram</p>" +
+            "<p>Karbonhidrat ihtiyacınız: <strong>" + karbonhidratIhtiyaci + "</strong> gram</p>" +
+            "<p>Yağ ihtiyacınız: <strong>" + yagIhtiyaci + "</strong> gram</p>";
+
+            function goToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0
+}   
+    }
+</script>
+
+<!-- Slider Container -->
+<div class="slider">
+    <!-- Slide 1 -->
+    <div class="slide" onclick="redirectTo('https://fityemek.com/fit-tarifler/sef-gibi-kahvalti-hazirla/')">
+        <img src="slider1.png" alt="Slide 1">
+    </div>
+    <!-- Slide 2 -->
+    <div class="slide" onclick="redirectTo('https://fityemek.com/genel/tavada-tavuk-nasil-pisirilir/')">
+        <img src="slider2.png" alt="Slide 2">
+    </div>
+    <!-- Slide 3 -->
+    <div class="slide" onclick="redirectTo('https://fityemek.com/fit-tarifler/fit-yemekler/pratik-tavuk-pilav-tarifi/')">
+        <img src="slider3.png" alt="Slide 3">
+    </div>
+</div>
+
+<script>
+    function redirectTo(url) {
+        window.location.href = url;
+    }
+</script>   
+
+<script>
+    $(document).ready(function(){
+        $('.slider').slick({
+            autoplay: true, // Otomatik oynatma
+            autoplaySpeed: 2000, // Otomatik oynatma hızı (ms cinsinden)
+            dots: true, // Navigasyon noktalarını göster
+            arrows: false // Okları gizle
+        });
+    });
+</script>
+
+<!--Yukarı Çıkma Oku Başlangıc-->
+
+<button onclick="topFunction()" id="scrollTopBtn" title="Sayfanın başına git">&#8679;</button>
+
+<script>
+// Sayfanın en üstüne gitmek için bir fonksiyon oluşturalım
+function topFunction() {
+  document.body.scrollTop = 0; // Safari
+  document.documentElement.scrollTop = 0; // Diğer tarayıcılar için
+}
+</script>
+
+</body>
+</html>
